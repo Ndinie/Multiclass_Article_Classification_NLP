@@ -21,7 +21,8 @@ Plus Colab does not need any additional modules installation.
 # How to use the project
 You need to ensure that when you load the dataset, it links directly to the correct path which is here [bbc-text.csv](https://raw.githubusercontent.com/susanli2016/PyCon-Canada-2019-NLP-Tutorial/master/bbc-text.csv)
 
-Then after that you can proceed as usual. You can also check each of sections inside **Multiclass_Article_Classification_train.py** to analyze how the flow of training the dataset is.
+Then after that you can proceed as usual. You can also check each of sections inside **Multiclass_Article_Classification_train.py** 
+to analyze how the flow of training the dataset is.
 
 Under Model Development, we can see how the model flow is:
 
