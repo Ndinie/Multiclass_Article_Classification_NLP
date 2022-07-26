@@ -107,6 +107,8 @@ nlp = md.sequential_model(input_shape, vocab_size = 1000, out_dims = 128,
 
 plot_model(nlp, show_shapes=(True))
 
+"""# MODEL COMPILATION"""
+
 nlp.compile(optimizer='adam',loss='categorical_crossentropy',
               metrics=['accuracy','acc'])
 
@@ -118,6 +120,8 @@ tensorboard_callback = TensorBoard(log_dir=LOGS_PATH,histogram_freq=1)
 !zip -r /content/nlp_logs.zip /content/nlp_logs
 from google.colab import files
 files.download("/content/nlp_logs.zip")
+
+"""# MODEL TRAINING"""
 
 hist = nlp.fit(X_train, y_train, epochs=10,
                validation_data=(X_test, y_test),
