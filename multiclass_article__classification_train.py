@@ -16,18 +16,19 @@ import pickle
 import datetime
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from tensorflow.keras.layers import Embedding
 from tensorflow.keras.utils import plot_model
 from tensorflow.keras import Input, Sequential
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.metrics import classification_report
 from tensorflow.keras.callbacks import TensorBoard
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from multiclass_article_classification_module import ModelDevelopment
 from tensorflow.keras.layers import LSTM, Dense, Dropout, Bidirectional
+from multiclass_article_classification_module import ModelDevelopment, ModelEvaluation
+from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
 
 """# STEP 1) DATA LOADING"""
 
@@ -58,24 +59,8 @@ nlp_df.duplicated().sum()
 
 nlp_df.drop_duplicates(inplace=True)
 
-"""REMOVE SYMBOLS, SPACES"""
-
 category = nlp_df['category']
 text = nlp_df['text']
-
-# for index, texts in enumerate(text):
-#   # to remove html tags
-#   # anything within the <> will be removed including <>
-#   # ? to tell re dont be greedy so it wont capture anything
-#   # from the first < to the last > in the document
-#   #category[index] = re.sub(text.split)
-#   text[index] = re.sub('<.*?>','',texts)
-#   text[index] = re.sub('[^a-zA-Z]',' ',texts).lower().split()
-# text = nlp_df['text']
-
-# for index, texts in enumerate(text):  #loop it to do it for all data
-#     text[index] = re.sub('<.*?>','',texts)
-#     text[index] = re.sub('[^a-zA-Z]',' ',texts).lower().split()
 
 """# STEP 4) FEATURE SELECTION
 
@@ -130,6 +115,10 @@ LOGS_PATH = os.path.join(os.getcwd(),'nlp_logs',datetime.datetime.now().
 
 tensorboard_callback = TensorBoard(log_dir=LOGS_PATH,histogram_freq=1)
 
+!zip -r /content/nlp_logs.zip /content/nlp_logs
+from google.colab import files
+files.download("/content/nlp_logs.zip")
+
 hist = nlp.fit(X_train, y_train, epochs=10,
                validation_data=(X_test, y_test),
                callbacks=tensorboard_callback)
@@ -146,12 +135,27 @@ hist = nlp.fit(X_train, y_train, epochs=10,
 
 hist.history.keys()
 
-"""# MODEL ANALYSIS"""
+me = ModelEvaluation()
+me.plot_hist_graph(hist)
+
+"""# MODEL ANALYSIS
+
+CLASSIFICATION REPORT
+"""
 
 y_pred = np.argmax(nlp.predict(X_test), axis=1)
 y_actual = np.argmax(y_test, axis=1)
 
-print(classification_report(y_actual, y_pred))
+cr = classification_report(y_actual, y_pred)
+print(cr)
+
+"""CONFUSION MATRIX"""
+
+cm = confusion_matrix(y_actual, y_pred)
+labels = ['tech','business','sport','entertainment','politics']
+disp = ConfusionMatrixDisplay(confusion_matrix = cm ,display_labels = labels)
+disp.plot(cmap='PuBuGn')
+plt.show()
 
 """# MODEL SAVING
 

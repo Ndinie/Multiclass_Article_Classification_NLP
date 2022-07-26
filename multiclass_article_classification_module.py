@@ -9,9 +9,12 @@ Original file is located at
 IMPORT NECESSARY PACKAGES
 """
 
+import matplotlib.pyplot as plt
 from tensorflow.keras.layers import Embedding
 from tensorflow.keras import Sequential, Input
 from tensorflow.keras.layers import LSTM, Dense, Dropout, Bidirectional
+
+"""MODEL DEVELOPMENT"""
 
 class ModelDevelopment:
   def sequential_model(self, input_shape, vocab_size = 1000, out_dims = 128, 
@@ -43,3 +46,19 @@ class ModelDevelopment:
     nlp.summary()
 
     return nlp
+
+"""MODEL EVALUATION"""
+
+class ModelEvaluation:
+  def plot_hist_graph(self,hist):
+    plt.figure()
+    plt.plot(hist.history['loss'])
+    plt.plot(hist.history['val_loss'])
+    plt.legend(['Training Loss', 'Validation Loss'])
+    plt.show()
+
+    plt.figure()
+    plt.plot(hist.history['acc'])
+    plt.plot(hist.history['val_acc'])
+    plt.legend(['Training Acc', 'Validation Acc'])
+    plt.show()
