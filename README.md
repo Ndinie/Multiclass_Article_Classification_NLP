@@ -7,7 +7,6 @@ Text documents often contain crucial information which might shape the market tr
 Therefore, companies often hire analysts to monitor the trend via articles posted online, 
 tweets on social media platforms such as Twitter or articles from newspaper. 
 
-
 However, some companies may wish to only focus on articles related to technologies and politics. 
 Thus, filtering of the articles into different categories is required.
 Often the categorization of the articles is conduced manually and retrospectively; thus, causing the waste of time and resources due to this arduous task. 
@@ -22,11 +21,25 @@ Plus Colab does not need any additional modules installation.
 # How to use the project
 You need to ensure that when you load the dataset, it links directly to the correct path which is here [bbc-text.csv](https://raw.githubusercontent.com/susanli2016/PyCon-Canada-2019-NLP-Tutorial/master/bbc-text.csv)
 
-Then after that you can proceed as usual. You can also check each of sections inside to analyze how the flow of training the dataset is.
+Then after that you can proceed as usual. You can also check each of sections inside **Multiclass_Article_Classification_train.py** to analyze how the flow of training the dataset is.
+
+Under Model Development, we can see how the model flow is:
+
+![model](https://github.com/Ndinie/Multiclass_Article_Classification_NLP/blob/main/static/model.png)
+
+I recommend to plot model graph for a few reasons:
+
+- **Confirm layer order**. It is easy to add layers in the wrong order with the sequential API or to connect them together incorrectly with the functional API. The graph plot can help you confirm that the model is connected the way you intended.
+
+- **Confirm the output shape of each layer**. It is common to have problems when defining the shape of input data for complex networks like convolutional and recurrent neural networks. The summary and plot can help you confirm the input shape to the network is as you intended.
+
+- **Confirm parameters**. Some network configurations can use far fewer parameters, such as the use of a TimeDistributed wrapped Dense layer in an Encoder-Decoder recurrent neural network. Reviewing the summary can help spot cases of using far more parameters than expected.
 
 With the help of Tensorboard, we were able to see the training process plotted via Tensorboard:
 
 ![Training-process-plotted-using-Tensorboard](https://github.com/Ndinie/Multiclass_Article_Classification_NLP/blob/main/static/Training-process-plotted-using-Tensorboard.png)
+
+Tensorboard are used to identify the training process between loss and accuracy.
 
 Below is the classification report which acquired after training the dataset.
 
